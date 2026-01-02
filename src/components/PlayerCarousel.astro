@@ -1,0 +1,268 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import PlayerCard from "./PlayerCard.astro";
+import { players } from "../data/players";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const basePath = lang === "es" ? "" : "/en";
+const representedPath = lang === "es" ? "representados" : "represented";
+---
+
+<section class="bg-dark-900 py-24 overflow-hidden">
+    <div class="mx-auto max-w-7xl px-6 lg:px-12">
+        <!-- Header -->
+        <div
+            class="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+        >
+            <div>
+                <h2
+                    class="text-5xl md:text-6xl font-bold text-white font-space mb-4"
+                >
+                    {
+                        lang === "es"
+                            ? "Representados destacados"
+                            : "Featured players"
+                    }
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl">
+                    {
+                        lang === "es"
+                            ? "Talento de élite en los mejores clubes del mundo"
+                            : "Elite talent at the world's best clubs"
+                    }
+                </p>
+            </div>
+
+            <!-- Navigation buttons -->
+            <div class="flex items-center gap-4">
+                <button
+                    id="carousel-prev"
+                    class="cursor-pointer flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary-500 text-primary-400 transition-all hover:bg-primary-500 hover:text-white"
+                    aria-label="Previous"
+                >
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <button
+                    id="carousel-next"
+                    class="cursor-pointer flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary-500 text-primary-400 transition-all hover:bg-primary-500 hover:text-white"
+                    aria-label="Next"
+                >
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Carousel container -->
+        <div class="relative">
+            <div
+                id="carousel-track"
+                class="flex gap-6 transition-transform duration-500 ease-out"
+            >
+                {
+                    players.map((player) => (
+                        <div class="carousel-item shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                            <PlayerCard player={player} />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+
+        <!-- Dots indicators -->
+        <div id="carousel-dots" class="mt-8 flex justify-center gap-2">
+            <!-- Los dots se generarán con JavaScript -->
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-12 text-center">
+            <a
+                href={`${basePath}/${representedPath}`}
+                class="group inline-flex items-center gap-2 text-primary-400 font-semibold transition-all hover:gap-4"
+            >
+                {
+                    lang === "es"
+                        ? "Ver todos los representados"
+                        : "View all represented"
+                }
+                <svg
+                    class="w-5 h-5 transition-all"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script is:inline>
+    function initCarousel() {
+        const track = document.getElementById("carousel-track");
+        const prevBtn = document.getElementById("carousel-prev");
+        const nextBtn = document.getElementById("carousel-next");
+        const dotsContainer = document.getElementById("carousel-dots");
+
+        if (track && prevBtn && nextBtn && dotsContainer) {
+            const items = Array.from(track.children);
+            const totalItems = items.length;
+
+            // Calcular items visibles según pantalla
+            const getItemsPerView = () => {
+                if (window.innerWidth >= 1024) return 4;
+                if (window.innerWidth >= 640) return 2;
+                return 1;
+            };
+
+            let currentIndex = 0;
+            let itemsPerView = getItemsPerView();
+            let maxIndex = Math.max(0, totalItems - itemsPerView);
+            let autoplayInterval;
+
+            // Crear dots
+            const createDots = () => {
+                dotsContainer.innerHTML = "";
+
+                for (let i = 0; i <= maxIndex; i++) {
+                    const dot = document.createElement("button");
+                    dot.className =
+                        "h-2 w-2 rounded-full transition-all cursor-pointer";
+                    dot.setAttribute("aria-label", "Go to slide " + (i + 1));
+                    updateDotStyle(dot, i === currentIndex);
+                    dot.addEventListener("click", () => goToSlide(i));
+                    dotsContainer.appendChild(dot);
+                }
+            };
+
+            const updateDotStyle = (dot, isActive) => {
+                if (isActive) {
+                    dot.className =
+                        "h-2 w-8 rounded-full bg-primary-500 transition-all cursor-pointer";
+                } else {
+                    dot.className =
+                        "h-2 w-2 rounded-full bg-gray-600 hover:bg-gray-500 transition-all cursor-pointer";
+                }
+            };
+
+            const updateDots = () => {
+                const dots = dotsContainer.children;
+                Array.from(dots).forEach((dot, index) => {
+                    updateDotStyle(dot, index === currentIndex);
+                });
+            };
+
+            const updateCarousel = () => {
+                const itemWidth = items[0]?.offsetWidth || 0;
+                const gap = 24;
+                const offset = currentIndex * (itemWidth + gap);
+                track.style.transform = "translateX(-" + offset + "px)";
+                updateDots();
+            };
+
+            const goToSlide = (index) => {
+                currentIndex = Math.max(0, Math.min(index, maxIndex));
+                updateCarousel();
+                resetAutoplay();
+            };
+
+            const nextSlide = () => {
+                currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+                updateCarousel();
+            };
+
+            const prevSlide = () => {
+                currentIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
+                updateCarousel();
+            };
+
+            // Event listeners
+            nextBtn.addEventListener("click", () => {
+                nextSlide();
+                resetAutoplay();
+            });
+
+            prevBtn.addEventListener("click", () => {
+                prevSlide();
+                resetAutoplay();
+            });
+
+            // Autoplay
+            const startAutoplay = () => {
+                autoplayInterval = setInterval(nextSlide, 5000);
+            };
+
+            const stopAutoplay = () => {
+                clearInterval(autoplayInterval);
+            };
+
+            const resetAutoplay = () => {
+                stopAutoplay();
+                startAutoplay();
+            };
+
+            // Pause on hover
+            track.addEventListener("mouseenter", stopAutoplay);
+            track.addEventListener("mouseleave", startAutoplay);
+
+            // Resize handler
+            let resizeTimeout;
+            window.addEventListener("resize", () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    const newItemsPerView = getItemsPerView();
+                    if (newItemsPerView !== itemsPerView) {
+                        itemsPerView = newItemsPerView;
+                        maxIndex = Math.max(0, totalItems - itemsPerView);
+                        currentIndex = Math.min(currentIndex, maxIndex);
+                        createDots();
+                        updateCarousel();
+                    }
+                }, 250);
+            });
+
+            // Initialize
+            createDots();
+            updateCarousel();
+            startAutoplay();
+        }
+    }
+
+    // Ejecutar al cargar
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initCarousel);
+    } else {
+        initCarousel();
+    }
+
+    // Re-ejecutar en navegaciones de Astro
+    document.addEventListener("astro:page-load", initCarousel);
+</script>

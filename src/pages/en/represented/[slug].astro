@@ -1,0 +1,184 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../../../layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import { players } from "../../../data/players";
+import { calculateAge } from "../../../utils/date";
+
+export function getStaticPaths() {
+    return players.map((player) => ({
+        params: { slug: player.slug },
+        props: { player },
+    }));
+}
+
+const { player } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const age = calculateAge(player.birthDate);
+const flagUrl = `https://flagcdn.com/w40/${player.countryCode}.png`;
+const clubLogoUrl = `/images/clubs/TCM1_${player.clubId}.png`;
+
+const basePath = lang === "es" ? "" : "/en";
+const representedPath = lang === "es" ? "representados" : "represented";
+const contactPath = lang === "es" ? "contacto" : "contact";
+---
+
+<Layout>
+    <main class="min-h-screen bg-dark-900">
+        <!-- Hero con imagen de fondo -->
+        <section class="relative h-screen flex items-center">
+            <!-- Imagen de fondo -->
+            <div class="absolute inset-0">
+                <Image
+                    src={player.image}
+                    alt={player.name}
+                    width={1920}
+                    height={1080}
+                    class="h-full w-full object-cover"
+                />
+                <!-- Overlay oscuro -->
+                <div
+                    class="absolute inset-0 bg-linear-to-r from-black via-black/90 to-black/60"
+                >
+                </div>
+            </div>
+
+            <!-- Contenido -->
+            <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 w-full">
+                <div class="max-w-3xl">
+                    <!-- Back button -->
+                    <a
+                        href={`${basePath}/${representedPath}`}
+                        class="inline-flex items-center gap-2 text-gray-400 hover:text-primary-400 transition-colors mb-8"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        {t("playerProfile.backToPlayers")}
+                    </a>
+
+                    <!-- Club logo y nombre -->
+                    <div class="mb-6 flex items-center gap-3">
+                        <img
+                            src={clubLogoUrl}
+                            alt={player.club}
+                            class="h-12 w-12 object-contain opacity-80"
+                            loading="lazy"
+                        />
+                        <div class="h-1 w-12 bg-primary-500"></div>
+                        <span
+                            class="text-lg font-medium uppercase tracking-wider text-gray-300"
+                        >
+                            {player.club}
+                        </span>
+                    </div>
+
+                    <!-- Nombre -->
+                    <h1
+                        class="mb-8 text-6xl md:text-7xl lg:text-8xl font-bold text-white font-space leading-[0.9]"
+                    >
+                        {player.name}
+                    </h1>
+
+                    <!-- Info básica -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                        <!-- Posición -->
+                        <div>
+                            <p
+                                class="text-sm text-gray-500 uppercase tracking-wider mb-2"
+                            >
+                                {t("playerProfile.info.position")}
+                            </p>
+                            <p class="text-xl font-semibold text-white">
+                                {t(`positions.${player.positionKey}`)}
+                            </p>
+                        </div>
+
+                        <!-- Edad -->
+                        <div>
+                            <p
+                                class="text-sm text-gray-500 uppercase tracking-wider mb-2"
+                            >
+                                {t("playerProfile.info.age")}
+                            </p>
+                            <p class="text-xl font-semibold text-white">
+                                {age}
+                                {t("common.years")}
+                            </p>
+                        </div>
+
+                        <!-- Club -->
+                        <div>
+                            <p
+                                class="text-sm text-gray-500 uppercase tracking-wider mb-2"
+                            >
+                                {t("playerProfile.info.club")}
+                            </p>
+                            <p class="text-xl font-semibold text-white">
+                                {player.club}
+                            </p>
+                        </div>
+
+                        <!-- Nacionalidad -->
+                        <div>
+                            <p
+                                class="text-sm text-gray-500 uppercase tracking-wider mb-2"
+                            >
+                                {t("playerProfile.info.nationality")}
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <img
+                                    src={flagUrl}
+                                    alt={player.nationality}
+                                    class="h-5 w-7 rounded object-cover"
+                                    loading="lazy"
+                                />
+                                <p class="text-xl font-semibold text-white">
+                                    {player.nationality}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="mb-10 max-w-2xl">
+                        <p class="text-xl text-gray-300 leading-relaxed">
+                            {t(player.bioKey)}
+                        </p>
+                    </div>
+
+                    <!-- CTA -->
+                    <a
+                        href={`${basePath}/${contactPath}`}
+                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-8 py-4 text-base font-bold text-white uppercase tracking-wider transition-all hover:bg-primary-500 hover:shadow-lg hover:shadow-primary-500/50"
+                    >
+                        {t("playerProfile.contact")}
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>

@@ -1,46 +1,62 @@
-# Astro Starter Kit: Basics
+# Apex Agency - Elite Sports Representation
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+![Astro](https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Multi-language](https://img.shields.io/badge/Language-Spanish%20%2F%20English-blue?style=for-the-badge)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+**Apex Agency** is a premier sports management and representation firm dedicated to transforming athletic talent into sustainable success. This platform showcases our commitment to excellence, integrity, and the professional growth of our elite athletes.
 
-## 🚀 Project Structure
+## 🌟 Our Mission
 
-Inside of your Astro project, you'll see the following folders and files:
+To provide world-class representation that maximizes opportunities and builds lasting careers based on solid values. We believe every player deserves a strategic partner to navigate the complexities of professional football.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+## 🚀 Key Features
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+- **⚡ High-Performance Architecture**: Built with **Astro 5** for lightning-fast speeds and optimal SEO.
+- **🎨 Elite Design**: A sophisticated, dark-themed UI powered by **Tailwind CSS 4**, reflecting the premium nature of the agency.
+- **🌍 Global Reach**: Fully localized experience in **Spanish and English** to connect with clubs and partners worldwide.
+- **⚽ Player Showcases**: Detailed profiles for our represented talent, including performance stats and personal biographies.
+- **� Service Portfolio**: Comprehensive overview of our offerings, from contract negotiation to brand management.
 
-## 🧞 Commands
+## 📁 6 Pillars of Service
 
-All commands are run from the root of the project, from a terminal:
+1.  **Integrated Representation**: Strategic long-term career planning.
+2.  **Contract Negotiation**: Maximizing market value and securing optimal conditions.
+3.  **Legal & Tax Advice**: Complete legal protection and financial optimization.
+4.  **Brand Management**: Building and scaling personal athlete brands.
+5.  **Psychological Support**: Mental health and performance coaching.
+6.  **Performance & Nutrition**: Personalized plans to stay at the physical peak.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## 🛠️ Technology Stack
 
-## 👀 Want to learn more?
+- **Framework**: [Astro 5](https://astro.build/) (Static Site Generation & Islands)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) (Modern CSS-first approach)
+- **Fonts**: Geist, Inter, and Space Grotesk.
+- **Localization**: Custom i18n implementation for seamless language switching.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🔧 Installation & Setup
+
+1.  **Clone the Repo**:
+    ```sh
+    git clone https://github.com/YOUR_USERNAME/agencia.git
+    cd agencia
+    ```
+
+2.  **Install Dependencies**:
+    ```sh
+    pnpm install
+    ```
+
+3.  **Start Developing**:
+    ```sh
+    pnpm dev
+    ```
+
+4.  **Production Build**:
+    ```sh
+    pnpm build
+    ```
+
+## 📄 License
+
+Project developed by **Apex Agency**. [MIT Licensed](./LICENSE).

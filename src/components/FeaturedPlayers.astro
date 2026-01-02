@@ -1,0 +1,65 @@
+---
+// src/components/FeaturedPlayers.astro
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import PlayerCard from "./PlayerCard.astro";
+import { players } from "../data/players";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const basePath = lang === "es" ? "" : "/en";
+const representedPath = lang === "es" ? "representados" : "represented";
+---
+
+<section class="bg-dark-900 py-24">
+    <div class="mx-auto max-w-7xl px-6 lg:px-12">
+        <!-- Header -->
+        <div
+            class="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+        >
+            <div>
+                <h2
+                    class="text-5xl md:text-6xl font-bold text-white font-space mb-4"
+                >
+                    {
+                        lang === "es"
+                            ? "Representados destacados"
+                            : "Featured players"
+                    }
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl">
+                    {
+                        lang === "es"
+                            ? "Talento de élite en los mejores clubes del mundo"
+                            : "Elite talent at the world's best clubs"
+                    }
+                </p>
+            </div>
+
+            <!-- CTA -->
+            <a
+                href={`${basePath}/${representedPath}`}
+                class="group inline-flex items-center gap-2 text-primary-400 font-semibold transition-all hover:gap-4"
+            >
+                {lang === "es" ? "Ver todos" : "View all"}
+                <svg
+                    class="w-5 h-5 transition-all"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Grid de jugadores -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {players.map((player) => <PlayerCard player={player} />)}
+        </div>
+    </div>
+</section>

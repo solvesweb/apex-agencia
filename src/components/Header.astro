@@ -1,0 +1,179 @@
+---
+// src/components/Header.astro
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import LanguageSelector from "../components/LenguageSelector.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Rutas según idioma
+const basePath = lang === "es" ? "" : "/en";
+---
+
+<header
+    id="main-header"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+    <nav class="mx-auto max-w-7xl px-6 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <a
+                href={`${basePath}/`}
+                class="flex items-center gap-2 text-2xl font-bold font-space text-white"
+            >
+                <div
+                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-primary-500 to-primary-600"
+                >
+                    <span class="text-xl font-black text-white">A</span>
+                </div>
+                <span>Apex Agency</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden items-center gap-8 md:flex">
+                <a
+                    href={`${basePath}/`}
+                    class="nav-link text-sm font-medium text-gray-300 transition-colors hover:text-white"
+                >
+                    {t("nav.home")}
+                </a>
+                <a
+                    href={`${basePath}/${lang === "es" ? "representados" : "represented"}`}
+                    class="nav-link text-sm font-medium text-gray-300 transition-colors hover:text-white"
+                >
+                    {t("nav.represented")}
+                </a>
+                <a
+                    href={`${basePath}/${lang === "es" ? "servicios" : "services"}`}
+                    class="nav-link text-sm font-medium text-gray-300 transition-colors hover:text-white"
+                >
+                    {t("nav.services")}
+                </a>
+                <a
+                    href={`${basePath}/${lang === "es" ? "agencia" : "agency"}`}
+                    class="nav-link text-sm font-medium text-gray-300 transition-colors hover:text-white"
+                >
+                    {t("nav.agency")}
+                </a>
+
+                <!-- Language Selector -->
+                <LanguageSelector />
+
+                <!-- CTA Button -->
+                <a
+                    href={`${basePath}/${lang === "es" ? "contacto" : "contact"}`}
+                    class="rounded-lg bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-primary-500 hover:shadow-lg hover:shadow-primary-500/50"
+                >
+                    {t("nav.contact")}
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+                id="mobile-menu-button"
+                class="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg md:hidden"
+                aria-label="Toggle menu"
+            >
+                <span class="h-0.5 w-6 bg-white transition-all"></span>
+                <span class="h-0.5 w-6 bg-white transition-all"></span>
+                <span class="h-0.5 w-6 bg-white transition-all"></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden flex-col gap-4 pt-6 md:hidden">
+            <a
+                href={`${basePath}/`}
+                class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+            >
+                {t("nav.home")}
+            </a>
+            <a
+                href={`${basePath}/${lang === "es" ? "representados" : "represented"}`}
+                class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+            >
+                {t("nav.represented")}
+            </a>
+            <a
+                href={`${basePath}/${lang === "es" ? "servicios" : "services"}`}
+                class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+            >
+                {t("nav.services")}
+            </a>
+            <a
+                href={`${basePath}/${lang === "es" ? "agencia" : "agency"}`}
+                class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+            >
+                {t("nav.agency")}
+            </a>
+            <a
+                href={`${basePath}/${lang === "es" ? "contacto" : "contact"}`}
+                class="mt-2 rounded-lg bg-primary-600 px-6 py-2.5 text-center text-sm font-semibold text-white"
+            >
+                {t("nav.contact")}
+            </a>
+
+            <!-- Language Selector Mobile -->
+            <div class="pt-4 border-t border-gray-700">
+                <LanguageSelector />
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script is:inline>
+    function initHeader() {
+        // Scroll behavior
+        const header = document.getElementById("main-header");
+        let lastScroll = 0;
+
+        window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 50) {
+                header?.classList.add("scrolled");
+            } else {
+                header?.classList.remove("scrolled");
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileMenuButton?.addEventListener("click", () => {
+            mobileMenu?.classList.toggle("hidden");
+            mobileMenu?.classList.toggle("flex");
+        });
+    }
+
+    // Ejecutar al cargar
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initHeader);
+    } else {
+        initHeader();
+    }
+
+    // Re-ejecutar en navegaciones de Astro
+    document.addEventListener("astro:page-load", initHeader);
+</script>
+
+<style>
+    #main-header {
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(8px);
+    }
+
+    #main-header.scrolled {
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    #main-header.scrolled nav {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+</style>

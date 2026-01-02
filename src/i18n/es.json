@@ -1,0 +1,160 @@
+{
+    "nav": {
+        "home": "Inicio",
+        "represented": "Representados",
+        "services": "Servicios",
+        "agency": "La Agencia",
+        "contact": "Contacto"
+    },
+    "common": {
+        "years": "años",
+        "viewProfile": "Ver perfil"
+    },
+    "home": {
+        "title": "Nuestros Representados",
+        "heroTitle": "Apex Agency",
+        "heroSubtitle": "Representación deportiva de élite"
+    },
+    "player": {
+        "position": "Posición",
+        "age": "Edad",
+        "club": "Club",
+        "nationality": "Nacionalidad"
+    },
+    "positions": {
+        "forward": "Delantero",
+        "midfielder": "Centrocampista",
+        "defender": "Defensa",
+        "goalkeeper": "Portero"
+    },
+    "team": {
+        "title": "Nuestro equipo",
+        "subtitle": "Expertos en cada área del fútbol profesional"
+    },
+    "roles": {
+        "ceo": "CEO & Fundador",
+        "agent": "Agente FIFA",
+        "lawyer": "Director Legal",
+        "scout": "Director de Scouting"
+    },
+    "contact": {
+        "title": "Hablemos",
+        "subtitle": "¿Listo para llevar tu carrera al siguiente nivel? Contacta con nosotros.",
+        "form": {
+            "name": "Nombre completo",
+            "email": "Email",
+            "phone": "Teléfono",
+            "message": "Mensaje",
+            "submit": "Enviar mensaje"
+        },
+        "info": {
+            "title": "Información de contacto",
+            "email": "Email",
+            "phone": "Teléfono",
+            "location": "Ubicación"
+        }
+    },
+    "services": {
+        "title": "Nuestros servicios",
+        "subtitle": "Soluciones integrales para impulsar tu carrera al máximo nivel"
+    },
+    "servicesList": {
+        "representation": {
+            "title": "Representación integral",
+            "description": "Gestión completa de tu carrera profesional, desde la firma de contratos hasta la planificación estratégica a largo plazo."
+        },
+        "negotiation": {
+            "title": "Negociación de contratos",
+            "description": "Acuerdos que maximizan tu valor en el mercado, asegurando las mejores condiciones económicas y deportivas."
+        },
+        "legal": {
+            "title": "Asesoramiento legal y fiscal",
+            "description": "Protección jurídica completa y optimización financiera para que te centres en tu rendimiento."
+        },
+        "branding": {
+            "title": "Gestión de imagen y marca",
+            "description": "Construcción y desarrollo de tu marca personal, aumentando tu valor dentro y fuera del campo."
+        },
+        "psychology": {
+            "title": "Apoyo psicológico",
+            "description": "Soporte mental profesional para mantener el equilibrio emocional y maximizar tu rendimiento."
+        },
+        "performance": {
+            "title": "Nutrición y rendimiento",
+            "description": "Planes personalizados de entrenamiento y alimentación diseñados para optimizar tu condición física."
+        }
+    },
+    "agency": {
+        "title": "Quiénes somos",
+        "subtitle": "Una agencia construida sobre la excelencia, la confianza y el compromiso con nuestros representados",
+        "mission": {
+            "title": "Nuestra misión",
+            "description": "Transformar el talento en éxito sostenible. Creemos que cada jugador merece representación de clase mundial que no solo maximice oportunidades, sino que construya carreras duraderas basadas en valores sólidos."
+        },
+        "vision": {
+            "title": "Nuestra visión",
+            "description": "Ser la agencia de referencia en representación deportiva a nivel global, reconocida por nuestra integridad, resultados y el desarrollo integral de nuestros representados."
+        },
+        "values": {
+            "title": "Nuestros valores",
+            "integrity": {
+                "title": "Integridad",
+                "description": "Actuamos con transparencia y ética en cada negociación"
+            },
+            "excellence": {
+                "title": "Excelencia",
+                "description": "Buscamos los mejores resultados en cada aspecto del servicio"
+            },
+            "commitment": {
+                "title": "Compromiso",
+                "description": "Tu éxito es nuestro único objetivo"
+            },
+            "innovation": {
+                "title": "Innovación",
+                "description": "Utilizamos las últimas herramientas y estrategias del mercado"
+            }
+        },
+        "cta": {
+            "title": "¿Listo para unirte a Apex Agency?",
+            "button": "Contacta con nosotros"
+        }
+    },
+    "represented": {
+        "title": "Nuestros representados",
+        "subtitle": "Talento de élite en los mejores clubes del mundo",
+        "filters": {
+            "all": "Todos",
+            "forward": "Delanteros",
+            "midfielder": "Centrocampistas",
+            "defender": "Defensas",
+            "goalkeeper": "Porteros"
+        },
+        "count": {
+            "players": "jugadores"
+        }
+    },
+    "playerBios": {
+        "mateo-varela": "Joven delantero con gran proyección. Destaca por su velocidad y capacidad goleadora. Formado en la cantera del Valencia CF.",
+        "lucas-mendoza": "Centrocampista con gran visión de juego y capacidad de pase. Líder natural en el centro del campo.",
+        "diego-ramirez": "Central con gran capacidad defensiva y salida de balón. Sólido en el juego aéreo.",
+        "adrian-torres": "Portero ágil con excelentes reflejos. Destaca en el juego con los pies.",
+        "marcus-johnson": "Extremo rápido y desequilibrante. Su capacidad para el regate en espacios reducidos lo hace imparable.",
+        "gabriel-santos": "Delantero brasileño con gran técnica individual. Combina velocidad, control y definición.",
+        "thomas-muller-jr": "Centrocampista alemán con gran inteligencia táctica. Excelente en la transición defensa-ataque.",
+        "antoine-dubois": "Mediocentro francés elegante con gran visión de juego. Maestro en la creación de oportunidades.",
+        "luca-rossi": "Defensa italiano sólido y con gran capacidad de anticipación. Líder natural de la línea defensiva.",
+        "mateo-fernandez": "Lateral argentino moderno con gran proyección ofensiva. Rápido y con excelente técnica.",
+        "james-mitchell": "Portero inglés con gran presencia física. Seguro bajo palos y con buen juego aéreo.",
+        "leon-schmidt": "Guardameta alemán con reflejos extraordinarios. Destaca en el juego con los pies."
+    },
+    "playerProfile": {
+        "backToPlayers": "Volver a representados",
+        "contact": "Contactar sobre este jugador",
+        "info": {
+            "position": "Posición",
+            "age": "Edad",
+            "club": "Club actual",
+            "nationality": "Nacionalidad"
+        }
+    }
+}

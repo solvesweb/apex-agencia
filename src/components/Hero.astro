@@ -1,0 +1,160 @@
+---
+// src/components/Hero.astro
+import { Image } from "astro:assets";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const basePath = lang === "es" ? "" : "/en";
+const representedPath = lang === "es" ? "representados" : "represented";
+const contactPath = lang === "es" ? "contacto" : "contact";
+---
+
+<section
+    class="relative min-h-screen flex items-center overflow-hidden py-32 md:py-40"
+>
+    <!-- Imagen de fondo -->
+    <div class="absolute inset-0">
+        <Image
+            src="/images/hero.jpg"
+            alt="Football stadium aerial view"
+            width={1920}
+            height={1080}
+            class="h-full w-full object-cover"
+        />
+        <!-- Overlay oscuro con gradiente -->
+        <div
+            class="absolute inset-0 bg-linear-to-r from-black via-black/90 to-black/60"
+        >
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 w-full">
+        <div class="max-w-4xl">
+            <!-- Badge superior -->
+            <div
+                class="mb-10 inline-flex items-center gap-2 rounded-full border border-primary-500/30 bg-primary-500/10 px-4 py-2 backdrop-blur-sm"
+            >
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"
+                    ></span>
+                    <span
+                        class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"
+                    ></span>
+                </span>
+                <span class="text-sm font-medium text-primary-300">
+                    {
+                        lang === "es"
+                            ? "Representación deportiva de élite"
+                            : "Elite sports representation"
+                    }
+                </span>
+            </div>
+
+            <!-- Headline -->
+            <h1
+                class="mb-8 text-6xl md:text-7xl lg:text-8xl font-bold text-white font-space leading-[0.9] tracking-tight"
+            >
+                {
+                    lang === "es" ? (
+                        <>
+                            Tu carrera.
+                            <br />
+                            Nuestro{" "}
+                            <span class="text-primary-400">objetivo.</span>
+                        </>
+                    ) : (
+                        <>
+                            Your career.
+                            <br />
+                            Our <span class="text-primary-400">goal.</span>
+                        </>
+                    )
+                }
+            </h1>
+
+            <!-- Subtítulo -->
+            <p
+                class="mb-12 text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed"
+            >
+                {
+                    lang === "es"
+                        ? "Representamos a los mejores talentos del fútbol profesional. Negociamos contratos, gestionamos carreras y abrimos puertas en los clubes más importantes del mundo."
+                        : "We represent the best talents in professional football. We negotiate contracts, manage careers and open doors at the most important clubs in the world."
+                }
+            </p>
+
+            <!-- CTAs -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-24">
+                <a
+                    href={`${basePath}/${representedPath}`}
+                    class="group inline-flex items-center justify-center gap-2 rounded-none bg-primary-600 px-6 py-3 text-sm font-bold text-white uppercase tracking-wider transition-all hover:bg-primary-500 hover:gap-4"
+                >
+                    {lang === "es" ? "Ver representados" : "View represented"}
+                    <svg
+                        class="w-4 h-4 transition-all"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2.5"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+
+                <a
+                    href={`${basePath}/${contactPath}`}
+                    class="group inline-flex items-center justify-center gap-2 rounded-none border-2 border-white px-6 py-3 text-sm font-bold text-white uppercase tracking-wider transition-all hover:bg-white hover:text-black"
+                >
+                    {lang === "es" ? "Contacto" : "Contact"}
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-8 pt-8 border-t border-white/20">
+                <div>
+                    <div
+                        class="text-4xl md:text-5xl font-bold text-primary-400 font-space mb-1"
+                    >
+                        50+
+                    </div>
+                    <div
+                        class="text-xs md:text-sm text-gray-400 uppercase tracking-wider"
+                    >
+                        {lang === "es" ? "Representados" : "Represented"}
+                    </div>
+                </div>
+                <div>
+                    <div
+                        class="text-4xl md:text-5xl font-bold text-primary-400 font-space mb-1"
+                    >
+                        15+
+                    </div>
+                    <div
+                        class="text-xs md:text-sm text-gray-400 uppercase tracking-wider"
+                    >
+                        {lang === "es" ? "Años" : "Years"}
+                    </div>
+                </div>
+                <div>
+                    <div
+                        class="text-4xl md:text-5xl font-bold text-primary-400 font-space mb-1"
+                    >
+                        20+
+                    </div>
+                    <div
+                        class="text-xs md:text-sm text-gray-400 uppercase tracking-wider"
+                    >
+                        {lang === "es" ? "Países" : "Countries"}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

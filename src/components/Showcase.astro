@@ -1,0 +1,155 @@
+---
+// src/components/Showcase.astro
+import Image from "astro/components/Image.astro";
+import { getLangFromUrl } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const stats = [
+    {
+        number: "50+",
+        label: lang === "es" ? "Representados activos" : "Active represented",
+        sublabel:
+            lang === "es" ? "Jugadores y entrenadores" : "Players and coaches",
+    },
+    {
+        number: "15",
+        label: lang === "es" ? "Años de experiencia" : "Years of experience",
+        sublabel: lang === "es" ? "En el mercado" : "In the market",
+    },
+    {
+        number: "€200M",
+        label:
+            lang === "es"
+                ? "Valor de mercado gestionado"
+                : "Market value managed",
+        sublabel: lang === "es" ? "Cartera actual" : "Current portfolio",
+    },
+];
+// Escudos de clubes (usando los nombres de archivos que tienes)
+const clubs = [
+    { id: "868", name: "PSG" },
+    { id: "679", name: "Manchester City" },
+    { id: "676", name: "Liverpool" },
+    { id: "1135", name: "Inter Milan" },
+    { id: "1099", name: "AC Milan" },
+    { id: "1687", name: "Atlético Madrid" },
+    { id: "1736", name: "Real Madrid" },
+    { id: "1708", name: "Barcelona" },
+    { id: "915", name: "Bayern Munich" },
+    { id: "630", name: "Chelsea" },
+    { id: "1139", name: "Juventus" },
+    { id: "907", name: "Borussia Dortmund" },
+    { id: "602", name: "Arsenal" },
+    { id: "728", name: "Tottenham" },
+];
+---
+
+<section class="bg-dark-950 py-24 overflow-hidden">
+    <div class="mx-auto max-w-7xl px-6 lg:px-12 mb-20">
+        <!-- Título -->
+        <div class="mb-16 text-center">
+            <h2
+                class="text-5xl md:text-6xl font-bold text-white font-space mb-4"
+            >
+                {lang === "es" ? "Números que hablan" : "Numbers that speak"}
+            </h2>
+            <p class="text-xl text-gray-400">
+                {
+                    lang === "es"
+                        ? "No prometemos. Entregamos resultados."
+                        : "We don't promise. We deliver results."
+                }
+            </p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {
+                stats.map((stat) => (
+                    <div class="text-center group">
+                        <div class="mb-4">
+                            <div class="text-7xl md:text-8xl font-bold text-transparent bg-clip-text bg-linear-to-b from-primary-400 to-primary-600 font-space leading-none transition-transform group-hover:scale-110">
+                                {stat.number}
+                            </div>
+                        </div>
+                        <div class="text-xl font-semibold text-white mb-2">
+                            {stat.label}
+                        </div>
+                        <div class="text-sm text-gray-500 uppercase tracking-wider">
+                            {stat.sublabel}
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+
+    <!-- Separador -->
+    <div class="border-t border-white/10 mb-16"></div>
+
+    <!-- Marquee de clubes -->
+    <div class="mb-8">
+        <p
+            class="text-center text-sm text-gray-500 uppercase tracking-widest mb-12"
+        >
+            {lang === "es" ? "Clubes donde operamos" : "Clubs where we operate"}
+        </p>
+    </div>
+
+    <div class="relative">
+        <!-- Gradientes laterales para efecto fade -->
+        <div
+            class="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-dark-950 to-transparent z-10"
+        >
+        </div>
+        <div
+            class="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-dark-950 to-transparent z-10"
+        >
+        </div>
+
+        <!-- Marquee -->
+        <div class="marquee-container overflow-hidden">
+            <div class="marquee-content flex gap-16 items-center">
+                {
+                    [...clubs, ...clubs].map((club) => (
+                        <div class="shrink-0 group p-2">
+                            <Image
+                                src={`/images/clubs/TCM1_${club.id}.png`}
+                                alt={club.name}
+                                width="64"
+                                height="64"
+                                loading="lazy"
+                                class="h-16 w-16 object-contain opacity-40 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-110"
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .marquee-container {
+        width: 100%;
+    }
+
+    .marquee-content {
+        animation: marquee 40s linear infinite;
+        width: fit-content;
+    }
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .marquee-container:hover .marquee-content {
+        animation-play-state: paused;
+    }
+</style>

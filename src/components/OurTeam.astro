@@ -1,0 +1,29 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import TeamMemberCard from "./TeamMemberCard.astro";
+import { team } from "../data/team";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="bg-dark-950 py-24">
+    <div class="mx-auto max-w-7xl px-6 lg:px-12">
+        <!-- Header -->
+        <div class="mb-16 text-center">
+            <h2
+                class="text-5xl md:text-6xl font-bold text-white font-space mb-4"
+            >
+                {t("team.title")}
+            </h2>
+            <p class="text-xl text-gray-400">
+                {t("team.subtitle")}
+            </p>
+        </div>
+
+        <!-- Grid del equipo -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {team.map((member) => <TeamMemberCard member={member} />)}
+        </div>
+    </div>
+</section>

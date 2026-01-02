@@ -1,0 +1,171 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import PlayerCard from "../components/PlayerCard.astro";
+import { players } from "../data/players";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout>
+    <main
+        class="min-h-screen bg-dark-900 pb-24 px-6"
+        style="padding-top: 160px;"
+    >
+        <div class="mx-auto max-w-7xl">
+            <!-- Header -->
+            <div class="mb-16 text-center">
+                <h1
+                    class="text-5xl md:text-6xl font-bold text-white font-space mb-6"
+                >
+                    {t("represented.title")}
+                </h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    {t("represented.subtitle")}
+                </p>
+            </div>
+
+            <!-- Filtros -->
+            <div class="mb-12 flex flex-wrap justify-center gap-4">
+                <button
+                    class="filter-btn active px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all cursor-pointer"
+                    data-filter="all"
+                >
+                    {t("represented.filters.all")}
+                </button>
+                <button
+                    class="filter-btn px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all cursor-pointer"
+                    data-filter="forward"
+                >
+                    {t("represented.filters.forward")}
+                </button>
+                <button
+                    class="filter-btn px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all cursor-pointer"
+                    data-filter="midfielder"
+                >
+                    {t("represented.filters.midfielder")}
+                </button>
+                <button
+                    class="filter-btn px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all cursor-pointer"
+                    data-filter="defender"
+                >
+                    {t("represented.filters.defender")}
+                </button>
+                <button
+                    class="filter-btn px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all cursor-pointer"
+                    data-filter="goalkeeper"
+                >
+                    {t("represented.filters.goalkeeper")}
+                </button>
+            </div>
+
+            <!-- Contador -->
+            <div class="mb-8 text-center">
+                <p class="text-gray-400">
+                    <span id="player-count" class="font-bold text-primary-400"
+                        >{players.length}</span
+                    >
+                    <span class="ml-2">{t("represented.count.players")}</span>
+                </p>
+            </div>
+
+            <!-- Grid de jugadores -->
+            <div
+                id="players-grid"
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+                {
+                    players.map((player) => (
+                        <div
+                            class="player-item"
+                            data-position={player.positionKey}
+                        >
+                            <PlayerCard player={player} />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .filter-btn {
+        background: transparent;
+        border: 2px solid var(--color-dark-700);
+        color: var(--color-gray-400);
+    }
+
+    .filter-btn:hover {
+        border-color: var(--color-primary-500);
+        color: var(--color-primary-400);
+    }
+
+    .filter-btn.active {
+        background: var(--color-primary-600);
+        border-color: var(--color-primary-600);
+        color: white;
+    }
+
+    .player-item {
+        transition:
+            opacity 0.3s ease,
+            transform 0.3s ease;
+    }
+
+    .player-item.hidden {
+        opacity: 0;
+        transform: scale(0.9);
+        height: 0;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<script is:inline>
+    function initFilters() {
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const playerItems = document.querySelectorAll(".player-item");
+        const playerCount = document.getElementById("player-count");
+
+        filterButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const filter = button.getAttribute("data-filter");
+
+                // Actualizar botones activos
+                filterButtons.forEach((btn) => btn.classList.remove("active"));
+                button.classList.add("active");
+
+                // Filtrar jugadores
+                let visibleCount = 0;
+                playerItems.forEach((item) => {
+                    const position = item.getAttribute("data-position");
+
+                    if (filter === "all" || position === filter) {
+                        item.classList.remove("hidden");
+                        visibleCount++;
+                    } else {
+                        item.classList.add("hidden");
+                    }
+                });
+
+                // Actualizar contador
+                if (playerCount) {
+                    playerCount.textContent = visibleCount.toString();
+                }
+            });
+        });
+    }
+
+    // Ejecutar al cargar
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initFilters);
+    } else {
+        initFilters();
+    }
+
+    // Re-ejecutar en navegaciones de Astro
+    document.addEventListener("astro:page-load", initFilters);
+</script>

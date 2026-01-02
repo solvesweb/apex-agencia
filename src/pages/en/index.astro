@@ -1,0 +1,18 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import Hero from "../../components/Hero.astro";
+import Showcase from "../../components/Showcase.astro";
+import OurTeam from "../../components/OurTeam.astro";
+import PlayerCarousel from "../../components/PlayerCarousel.astro";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout>
+    <Hero />
+    <Showcase />
+    <PlayerCarousel />
+    <OurTeam />
+</Layout>

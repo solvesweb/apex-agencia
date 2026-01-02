@@ -1,0 +1,83 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const currentPath = Astro.url.pathname;
+
+// Mapeo de rutas ES → EN
+const routeMap: Record<string, string> = {
+    "/": "/en/",
+    "/representados": "/en/represented",
+    "/servicios": "/en/services",
+    "/agencia": "/en/agency",
+    "/contacto": "/en/contact",
+};
+
+// Mapeo inverso EN → ES
+const reverseRouteMap: Record<string, string> = {
+    "/en/": "/",
+    "/en/represented": "/representados",
+    "/en/services": "/servicios",
+    "/en/agency": "/agencia",
+    "/en/contact": "/contacto",
+};
+
+// Detectar si es una página de perfil de jugador
+const playerProfileMatch = currentPath.match(/^\/representados\/(.+)$/);
+const playerProfileMatchEn = currentPath.match(/^\/en\/represented\/(.+)$/);
+
+// Calcular rutas alternativas
+let esPath = currentPath;
+let enPath = currentPath;
+
+if (playerProfileMatch) {
+    // Estamos en perfil español, calcular versión inglesa
+    const slug = playerProfileMatch[1];
+    esPath = `/representados/${slug}`;
+    enPath = `/en/represented/${slug}`;
+} else if (playerProfileMatchEn) {
+    // Estamos en perfil inglés, calcular versión española
+    const slug = playerProfileMatchEn[1];
+    esPath = `/representados/${slug}`;
+    enPath = `/en/represented/${slug}`;
+} else {
+    // Rutas normales (no perfiles)
+    esPath = lang === "es" ? currentPath : reverseRouteMap[currentPath] || "/";
+
+    enPath = lang === "en" ? currentPath : routeMap[currentPath] || "/en/";
+}
+---
+
+<div class="flex items-center gap-2">
+    <a
+        href={esPath}
+        class={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-all ${
+            lang === "es"
+                ? "bg-primary-600 text-white"
+                : "text-gray-400 hover:text-gray-200"
+        }`}
+    >
+        <img
+            src="https://flagcdn.com/w20/es.png"
+            alt="Español"
+            class="h-3 w-4 rounded-sm object-cover"
+        />
+        <span>ES</span>
+    </a>
+
+    <a
+        href={enPath}
+        class={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-all ${
+            lang === "en"
+                ? "bg-primary-600 text-white"
+                : "text-gray-400 hover:text-gray-200"
+        }`}
+    >
+        <img
+            src="https://flagcdn.com/w20/gb.png"
+            alt="English"
+            class="h-3 w-4 rounded-sm object-cover"
+        />
+        <span>EN</span>
+    </a>
+</div>
