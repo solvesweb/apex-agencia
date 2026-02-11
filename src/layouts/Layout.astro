@@ -5,16 +5,94 @@ import "@fontsource-variable/inter";
 import Header from "../components/Header.astro";
 import ClientRouter from "astro/components/ClientRouter.astro";
 import Footer from "../components/Footer.astro";
+import { getLangFromUrl } from "../i18n/utils";
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+}
+
+const {
+	title = "Apex Agency - Elite Football Player Representation",
+	description = "Leading sports agency representing elite football talent worldwide. Professional contract negotiation, legal advisory, and comprehensive career management.",
+	image = "/images/hero.jpg",
+} = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const canonicalURL = new URL(
+	Astro.url.pathname,
+	"https://agencia.solvesweb.com",
+);
+const imageURL = new URL(image, "https://agencia.solvesweb.com");
+const ogLocale = lang === "es" ? "es_ES" : "en_US";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
+		<!-- Basic Meta Tags -->
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Apex Agency</title>
+
+		<!-- SEO Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta
+			name="keywords"
+			content="football agent, soccer representation, player agency, sports management, contract negotiation, FIFA agent"
+		/>
+		<link rel="canonical" href={canonicalURL.href} />
+
+		<!-- Open Graph / Facebook / LinkedIn -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL.href} />
+		<meta property="og:site_name" content="Apex Agency" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={imageURL.href} />
+		<meta property="og:image:secure_url" content={imageURL.href} />
+		<meta property="og:image:type" content="image/jpeg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:locale" content={ogLocale} />
+		{
+			lang === "es" && (
+				<meta property="og:locale:alternate" content="en_US" />
+			)
+		}
+		{
+			lang === "en" && (
+				<meta property="og:locale:alternate" content="es_ES" />
+			)
+		}
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={canonicalURL.href} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={imageURL.href} />
+
+		<!-- Language Alternates -->
+		<link
+			rel="alternate"
+			hreflang="en"
+			href="https://agencia.solvesweb.com/en"
+		/>
+		<link
+			rel="alternate"
+			hreflang="es"
+			href="https://agencia.solvesweb.com/"
+		/>
+		<link
+			rel="alternate"
+			hreflang="x-default"
+			href="https://agencia.solvesweb.com/"
+		/>
+
 		<ClientRouter />
 	</head>
 	<body>
